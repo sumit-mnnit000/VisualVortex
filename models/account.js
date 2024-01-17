@@ -20,4 +20,4 @@ const AccountSchema= new mongoose.Schema({
     
 });
 
-modeule.exports= mogoose.model("Account",AccountSchema);
+module.exports= mongoose.model("Account",AccountSchema);
