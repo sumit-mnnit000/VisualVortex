@@ -8,6 +8,11 @@ const OTPSchema= new mongoose.Schema({
     otp:{
         type:Number,
         max:6,
+    },
+    timestamp:{
+        type:Date,
+        default:Date.now,
+        expires:60*5,
     }
     
 
