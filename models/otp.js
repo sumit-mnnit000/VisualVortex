@@ -3,20 +3,19 @@ const mongoose = require("mongoose")
 const OTPSchema= new mongoose.Schema({
     user_id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
+        ref:"User",
     },
     otp:{
-        type:Number,
-        max:6,
+        type:String,
+        maxLength:6,
     },
     timestamp:{
         type:Date,
         default:Date.now,
-        expires:60*5,
     }
     
 
 
 });
 
-modeule.exports= mogoose.model("OTP",userSchema);
+module.exports= mongoose.model("OTP",OTPSchema);

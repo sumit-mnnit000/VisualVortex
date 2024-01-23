@@ -2,7 +2,32 @@ const User = require("../../models/user");
 const bcrypt = require("bcrypt");
 const account = require("../../models/account");
 const Otp = require("../../models/otp");
+const sendOTP=async(req,res,user)=>{
+    try {
 
+
+        const otpValue = Math.floor(100000 + Math.random() * 900000);
+        console.log("otpValue",otpValue.toString())
+        const otp = await Otp.create({user_id: user?.id, otp: otpValue });
+
+        // Return the generated OTP in the response
+        return res.status(200).json({
+            success: true,
+            status: 200,
+            message: "otp sent on your mobile number successfully",
+        })
+
+
+    }
+    catch (error) {
+
+        console.log(error.message);
+        return res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+}
 exports.sign_up = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -46,55 +71,33 @@ exports.sign_up = async (req, res) => {
                 });
             } else {
                 //call send otp function
-                exports.send_otp = async (req, res) => {
-                    try {
+                sendOTP(req,res,existingUser)
+                    
 
-
-                        const otpValue = Math.floor(100000 + Math.random() * 900000);
-
-                        const otp = new Otp({ otp: otpValue });
-                        await otp.save();
-
-                        // Return the generated OTP in the response
-                        return res.status(200).json({
-                            success: true,
-                            status: 200,
-                            message: "otp sent on your mobile number successfully",
-                        })
-
-
-                    }
-                    catch (error) {
-
-                        console.log(error.message);
-                        return res.status(500).json({
-                            success: false,
-                            error: error.message
-                        });
-                    }
-
-                }
             }
 
+        }else{
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const user = await User.create({
+                username,
+                password: hashedPassword,
+            })
+            console.log("user created", user)
+            const Account_details = await account.create({
+            user_id: user?.id,
+            });
+            sendOTP(req,res,user)
         }
 
     
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await User.create({
-        username,
-        password: hashedPassword,
-    })
-    console.log("user created", user)
-    const Account_details = await account.create({
-        user_id: user?.id,
-    });
+        
     //return res
-    return res.status(200).json({
-        success: true,
-        message: 'User is registered Successfully',
-        user,
-    });
+    // return res.status(200).json({
+    //     success: true,
+    //     message: 'User is registered Successfully',
+    //     user,
+    // });
 
 }
     catch (error) {
