@@ -13,4 +13,4 @@ const Db=require("./config/database.js");
 Db.connect();
 
 // ...
-app.use('/signup', authRouter)
+app.use('/auth', authRouter)
