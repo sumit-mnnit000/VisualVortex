@@ -1,4 +1,5 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const ImageSchema = require("./image");
 
 const AccountSchema= new mongoose.Schema({
     user_id:{
@@ -17,6 +18,10 @@ const AccountSchema= new mongoose.Schema({
         default:"",
 
     },
+    profile_pic:{
+        type:ImageSchema,
+        default:null
+    }
     
 });
 

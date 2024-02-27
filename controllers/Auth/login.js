@@ -43,7 +43,7 @@ exports.login=async(req,res)=>{
             res.status(200).json({
                 success:true,
                 status:200,
-                message:"user login suceefully",
+                message:"user login successfully",
                 data:{user}
             })
         }else{

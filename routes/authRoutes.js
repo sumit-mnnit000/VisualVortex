@@ -3,15 +3,15 @@ const { sign_up } = require('../controllers/Auth/signup')
 const { verify_otp } = require('../controllers/Auth/verify_otp')
 const { login } = require('../controllers/Auth/login')
 const { resend_otp } = require('../controllers/Auth/resend_otp')
-const router = express.Router()
+const authRouter = express.Router()
 
 // define the home page route
-router.post('/signup', sign_up)
-router.put('/verify-otp',verify_otp)
-router.post('/login',login)
-router.post('/resend-otp',resend_otp)
+authRouter.post('/signup', sign_up)
+authRouter.put('/verify-otp',verify_otp)
+authRouter.post('/login',login)
+authRouter.post('/resend-otp',resend_otp)
 // define the about route
 
 
-module.exports = router
+module.exports = authRouter
 
